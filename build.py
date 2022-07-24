@@ -24,8 +24,8 @@ except KeyError:
 
 try:
   image_name = os.environ["IMAGE_NAME"]
-except KeyError:
-  image_name = "android-studio"
+except KeyError as ex:
+  raise Exception("expected env var IMAGE_NAME to be defined") from ex
 
 version = os.environ["IMAGE_VERSION"]
 gh_image_id = os.environ["GH_IMAGE_ID"]
@@ -33,7 +33,7 @@ gh_image_id = os.environ["GH_IMAGE_ID"]
 # org.opencontainers.image metadata
 oc_labels = {}
 
-with open("oc_labels") as infile:
+with open("oc_labels", encoding="utf8") as infile:
   for line in infile.readlines():
     k, v = line.strip().split(sep="=", maxsplit=1)
     oc_labels[k] = v
