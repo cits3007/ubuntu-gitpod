@@ -1,0 +1,56 @@
+
+name: build-push
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - '.gitignore'
+      - '.dockerignore'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - '.gitignore'
+      - '.dockerignore'
+  release:
+    types:
+      - created
+
+env:
+  REGISTRY: ghcr.io
+  DOCKER_HUB_OWNER: adstewart
+
+jobs:
+  docker_build:
+    name: docker build
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+        name: Check out code
+
+      - name: set docker image info
+        id: info
+        shell: bash
+        run: |
+          set -x
+          IMAGE_NAME=$(make print-image-name)
+          IMAGE_VERSION=$(make print-image-version)
+          echo "::set-output name=IMAGE_NAME::${IMAGE_NAME}"
+          echo "::set-output name=IMAGE_VERSION::${IMAGE_VERSION}"
+
+      - name: check info ok
+        run: |
+          IMAGE_NAME="${{ steps.info.outputs.IMAGE_NAME }}"
+          printf 'IMAGE_NAME is: <<%s>>\n' "${IMAGE_NAME}"
+          if [ -z ${IMAGE_NAME} ]; then
+            false
+          fi
+
+          IMAGE_VERSION="${{ steps.info.outputs.IMAGE_VERSION }}"
+          printf 'IMAGE_VERSION is: <<%s>>\n' "${IMAGE_VERSION}"
+          if [ -z ${IMAGE_VERSION} ]; then
+            false
+          fi
+
+

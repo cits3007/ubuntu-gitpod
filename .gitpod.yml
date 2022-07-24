@@ -1,0 +1,12 @@
+image:
+  file: .gitpod.Dockerfile
+
+#vscode:
+  #extensions:
+  #  - https://github.com/dafny-lang/ide-vscode/releases/download/v2.3.0/ide-vscode-2.3.0.vsix
+
+tasks:
+  - init: git config --global alias.slog 'log --pretty=oneline --abbrev-commit'
+  - init: git config --global alias.co checkout
+
+
