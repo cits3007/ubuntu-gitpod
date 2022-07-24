@@ -1,4 +1,4 @@
-## dafny-gitpod
+## cits3007 ubuntu-gitpod
 
 [![Docker hub version](https://img.shields.io/docker/v/adstewart/cits3007-gitpod?label=Docker%20Hub)](https://hub.docker.com/r/adstewart/cits3007-gitpod)
 
