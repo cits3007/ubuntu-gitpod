@@ -53,4 +53,20 @@ jobs:
             false
           fi
 
+      - name: Log in to Docker Hub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          username: ${{ secrets.DOCKER_HUB_USER }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Log in to github Container registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+
 
